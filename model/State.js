@@ -7,8 +7,9 @@ const statesSchema = new Schema({
     required: true,
     unique: true,
   },
-  funfacts: {
-    type: [String]
+  funFacts: {
+    type: [String],
+    required: false
   }
 });
 

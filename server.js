@@ -23,8 +23,7 @@ app.use(express.json()); //parses incoming requests with JSON payloads.
 app.use(express.static(path.join(__dirname, "/public")));
 app.use("/subdir", express.static(path.join(__dirname, "/public")));
 //All the routes
-app.use("/", require("./routes/root"));
-app.use("/subdir", require("./routes/subdir"));
+app.post("/states", require("./routes/api/states"));
 app.use("/states", require("./routes/api/states"));
 //All the non-existing paths
 app.all("*", (req, res) => {

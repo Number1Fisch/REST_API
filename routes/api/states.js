@@ -9,6 +9,19 @@ router
   .put(stateController.updateState)
   .delete(stateController.deleteState);
 
-router.route("/:id").get(stateController.getState);
+router.route("/?contig=:bool").get(stateController.getContigStates);
+
+router.route("/:state").get(stateController.getState);
+
+router.route("/:state/funfact").get(stateController.getStateFunFact);
+
+router.route(":state/capital")
+
+router.route(":state/nickname")
+
+router.route(":state/population")
+
+router.route(":state/admission")
+
 
 module.exports = router;
