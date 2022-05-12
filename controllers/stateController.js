@@ -28,7 +28,7 @@ const updateState = async (req, res) => {
   if (!req?.body.id) {
     return res.status(400).json({ message: "Id parameter is required. " });
   }
-  const state = await State.findOne({ "stateCode": req.body.id }).exec();
+  const state = await State.findOne({ "stateCode": req.body.stateCode }).exec();
 
   if (!state) {
     return res
@@ -48,14 +48,14 @@ const deleteState = async (req, res) => {
     return res.status(400).json({ message: "State Id is required. " });
   }
 
-  const state = await State.findOne({ _id: req.body.id }).exec();
+  const state = await State.findOne({ _id: req.body.stateCode }).exec();
 
   if (!state) {
     return res
       .status(204)
-      .json({ message: `No State matches Id ${req.body.id}` });
+      .json({ message: `No State matches stateCode ${req.body.stateCode}` });
   }
-  const result = await state.deleteOne({ _id: req.body.id });
+  const result = await state.deleteOne({ _id: req.body.stateCode });
   res.json(result);
 };
 
@@ -90,17 +90,53 @@ const getState = async (req, res) => {
 };
 
 const getStateFunFact = async (req, res) => {
-  if (!req?.params?.state) {
+  if (!req?.params?.stateCode) {
     return res.status(400).json({ message: "State code is required. " });
   }
 
-  const state = await State.findOne({ stateCode: req.params.state }).exec();
+  const state = await State.findOne({ stateCode: req.params.stateCode }).exec();
   if (!state) {
     return res
       .status(204)
       .json({ message: `No State matches Id ${req.params.state}` });
   }
-  res.json(state);
+  res.json(state.funfacts[0]);
+};
+
+const getStateCapital = async (req, res) => {
+  fs.readFile('./model/states.json', (err, data) => {
+    if (err) throw err;
+    var statesList = JSON.parse(data);
+    statesList.filter(req.params.stateCode)
+    return res.json(statesList.capital_city)
+  })
+};
+
+const getStateNickname = async (req, res) => {
+  fs.readFile('./model/states.json', (err, data) => {
+    if (err) throw err;
+    var statesList = JSON.parse(data);
+    statesList.filter(req.params.stateCode)
+    return res.json(statesList.nickname)
+  })
+};
+
+const getStatePopulation = async (req, res) => {
+  fs.readFile('./model/states.json', (err, data) => {
+    if (err) throw err;
+    var statesList = JSON.parse(data);
+    statesList.filter(req.params.stateCode)
+    return res.json(statesList.population)
+  })
+};
+
+const getStateAdmission = async (req, res) => {
+  fs.readFile('./model/states.json', (err, data) => {
+    if (err) throw err;
+    var statesList = JSON.parse(data);
+    statesList.filter(req.params.stateCode)
+    return res.json(statesList.admission)
+  })
 };
 
 module.exports = {
@@ -110,5 +146,9 @@ module.exports = {
   createNewState,
   getContigStates,
   getStateFunFact,
+  getStateCapital,
+  getStateNickname,
   getState,
+  getStatePopulation,
+  getStateAdmission,
 };

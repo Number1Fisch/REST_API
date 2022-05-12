@@ -15,13 +15,14 @@ router.route("/:state").get(stateController.getState);
 
 router.route("/:state/funfact").get(stateController.getStateFunFact);
 
-router.route(":state/capital")
+router.route(":state/capital").get(stateController.getStateCapital);
 
-router.route(":state/nickname")
 
-router.route(":state/population")
+router.route(":state/nickname").get(stateController.getStateNickname);
 
-router.route(":state/admission")
+router.route(":state/population").get(stateController.getStatePopulation);
+
+router.route(":state/admission").get(stateController.getStateAdmission);
 
 
 module.exports = router;
